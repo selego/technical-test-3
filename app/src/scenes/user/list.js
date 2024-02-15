@@ -32,7 +32,7 @@ const NewList = () => {
         .filter((u) => !filter?.status || u.status === filter?.status)
         .filter((u) => !filter?.contract || u.contract === filter?.contract)
         .filter((u) => !filter?.availability || u.availability === filter?.availability)
-        .filter((u) => !filter?.search || u.name.toLowerCase().includes(filter?.search.toLowerCase())),
+        .filter((u) => !filter?.search || !u?.name || u.name.toLowerCase().includes(filter?.search.toLowerCase())),
     );
   }, [users, filter]);
 
