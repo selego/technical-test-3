@@ -52,7 +52,7 @@ export default function ProjectView() {
               </button>
             </div>
           </div>
-          <ProjectDetails project={project} />
+          <ProjectDetails project={project[0]} />
         </div>
       </div>
     </React.Fragment>
