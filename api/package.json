@@ -29,7 +29,8 @@
     "password-validator": "^5.1.0",
     "pg": "^8.5.1",
     "sequelize": "^6.5.0",
-    "sib-api-v3-sdk": "^8.0.2"
+    "sib-api-v3-sdk": "^8.0.2",
+    "exceljs": "^4.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

@@ -15,22 +15,44 @@ class api {
     this.token = token;
   }
 
-  get(path) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch(`${apiURL}${path}`, {
-          mode: "cors",
-          method: "GET",
-          credentials: "include",
-          headers: { "Content-Type": "application/json", Authorization: `JWT ${this.token}` },
-        });
+  get(...args) {
+    if (args.length === 1) {
+      const path = args[0];
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await fetch(`${apiURL}${path}`, {
+            mode: "cors",
+            method: "GET",
+            credentials: "include",
+            headers: { "Content-Type": "application/json", Authorization: `JWT ${this.token}` },
+          });
 
-        const res = await response.json();
-        resolve(res);
-      } catch (e) {
-        reject(e);
-      }
-    });
+          const res = await response.json();
+          resolve(res);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }
+    else {
+      const path = args[0];
+      const contentType = args[1];
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await fetch(`${apiURL}${path}`, {
+            mode: "cors",
+            method: "GET",
+            credentials: "include",
+            headers: {"Content-Type": contentType, Authorization: `JWT ${this.token}` },
+          });
+
+          const res = await response;
+          resolve(res);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }
   }
 
   put(path, body) {
