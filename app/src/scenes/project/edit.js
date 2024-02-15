@@ -45,12 +45,12 @@ export default function EditProject() {
             </button>
           </div>
           <Formik
-            initialValues={project}
+            initialValues={project[0]}
             onSubmit={async (values) => {
               try {
-                await api.put(`/project/${project._id}`, values);
-                toast.success(`${project.name} updated!`);
-                history.push(`/project/${project._id}`);
+                await api.put(`/project/${project[0]._id}`, values);
+                toast.success(`${project[0].name} updated!`);
+                history.push(`/project/${project[0]._id}`);
               } catch (e) {
                 console.log(e);
                 toast.error("Some Error!");
@@ -59,7 +59,7 @@ export default function EditProject() {
             {({ values, handleChange, handleSubmit, isSubmitting }) => (
               <React.Fragment>
                 <div className="flex gap-4 pl-4 pt-4">
-                  {project.logo && <img className="w-[85px] h-[85px] border border-[#E5EAEF] rounded-[8px]" src={project.logo} alt="ProjectImage.png" />}
+                  {project[0].logo && <img className="w-[85px] h-[85px] border border-[#E5EAEF] rounded-[8px]" src={project[0].logo} alt="ProjectImage.png" />}
                 </div>
 
                 <div className="py-3 px-4">

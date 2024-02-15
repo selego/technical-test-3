@@ -32,7 +32,7 @@ const NewList = () => {
         .filter((u) => !filter?.status || u.status === filter?.status)
         .filter((u) => !filter?.contract || u.contract === filter?.contract)
         .filter((u) => !filter?.availability || u.availability === filter?.availability)
-        .filter((u) => !filter?.search || u.name.toLowerCase().includes(filter?.search.toLowerCase())),
+        .filter((u) => !filter?.search || !u?.name || u.name.toLowerCase().includes(filter?.search.toLowerCase())),
     );
   }, [users, filter]);
 
@@ -97,6 +97,12 @@ const Create = () => {
           Create new user
         </button>
       </div>
+      <br/>
+      <div className="text-right">
+        <button className="bg-[#0560FD] text-[#fff] py-[12px] px-[22px] w-[170px] h-[48px]	rounded-[10px] text-[16px] font-medium" onClick={() => PrintUsers()}>
+          Print all users
+        </button>
+      </div>
       {open ? (
         <div className=" absolute top-0 bottom-0 left-0 right-0  bg-[#00000066] flex justify-center p-[1rem] z-50 " onClick={() => setOpen(false)}>
           <div
@@ -128,7 +134,7 @@ const Create = () => {
                     <div className="flex justify-between flex-wrap">
                       <div className="w-full md:w-[48%] mt-2">
                         <div className="text-[14px] text-[#212325] font-medium	">Name</div>
-                        <input className="projectsInput text-[14px] font-normal text-[#212325] rounded-[10px]" name="username" value={values.username} onChange={handleChange} />
+                        <input className="projectsInput text-[14px] font-normal text-[#212325] rounded-[10px]" name="name" value={values.name} onChange={handleChange} />
                       </div>
                       <div className="w-full md:w-[48%] mt-2">
                         <div className="text-[14px] text-[#212325] font-medium	">Email</div>
@@ -252,6 +258,21 @@ const UserCard = ({ hit, projects }) => {
       </div>
     </div>
   );
+};
+
+const PrintUsers = () => {
+  (async () => {
+    const data = await api.get("/user/print_users", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    const blob = await data.blob();
+    const url = window.URL.createObjectURL(new Blob([blob]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'users.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+  })();
 };
 
 export default NewList;
